@@ -129,7 +129,8 @@ export default {
 
 .title > h1 {
   text-align: center;
-  font-family: "Bitter", serif;
+  font-family: "Open Sans", serif;
+  font-weight: 600;
   font-size: 3.5rem;
   line-height: 6rem;
   @media (max-width: 576px) {

@@ -4,8 +4,8 @@
   </div>
 </template>
 
-Vue.use(BootstrapVue)
-
+<script>
+</script>
 <style lang="scss">
   body {
     margin: 0;
