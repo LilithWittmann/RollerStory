@@ -6,6 +6,7 @@
     <PriceComparision />
     <TopNumbers />
     <DataExplorer />
+    <TripsOverDay />
   </div>
 </template>
 
@@ -17,6 +18,7 @@ import TopNumbers from "../components/TopNumbers";
 import TripTypes from "../components/TripTypes";
 import DataExplorer from "../components/DataExplorer";
 import AboutStory from "../components/AboutStory";
+import TripsOverDay from "../components/TripsOverDay";
 
 export default {
   name: "home",
@@ -26,7 +28,8 @@ export default {
     Intro,
     PriceComparision,
     TopNumbers,
-    TripTypes
+    TripTypes,
+    TripsOverDay
   }
 };
 </script>
@@ -116,8 +119,12 @@ h2 {
 }
 
 .numbers.inverted {
-   background-color: #000;
+  background-color: #000;
   color: #fff;
+  a {
+    color: #fff;
+    text-decoration: underline;
+  }
 }
 
 .numbers span {

@@ -97,3 +97,15 @@ export const EXPLORATION_WEEKDAY_HOUR = gql`
     }
   }
 `;
+
+export const TRIPS_VISUALIZATON = gql`
+  {
+    tripsVisualization {
+      color
+      path {
+        l
+        t
+      }
+    }
+  }
+`;

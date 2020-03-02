@@ -35,7 +35,7 @@ export default {
   data: function() {
     return {
       url:
-        "https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoibm9jaGZlbGl4IiwiYSI6IldwOGpBcmcifQ.hrc_eJ8JcJ2W6ABTTaBQOw",
+        "https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoibm9jaGZlbGl4IiwiYSI6IldwOGpBcmcifQ.hrc_eJ8JcJ2W6ABTTaBQOw",
       zoom: 13,
       center: [53.552896, 10.009847],
       bounds: null,
