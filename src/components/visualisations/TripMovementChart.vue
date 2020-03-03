@@ -1,11 +1,19 @@
 <template>
+  <div class="outer-container">
   <div class="deck-container">
     <div id="map" ref="map"></div>
     <canvas id="deck-canvas" ref="canvas"></canvas>
   </div>
+         <span>{{animationTime}}</span>
+  </div>
 </template>
 
 <style scoped>
+  .outer-container {
+
+  width: 100%;
+  position: relative;
+  }
 .deck-container {
   width: 100%;
   height: 600px;
@@ -33,16 +41,16 @@ import { Deck } from "@deck.gl/core";
 import { TripsLayer } from "@deck.gl/geo-layers";
 import deck from "@deck.gl/core";
 import mapboxgl from "mapbox-gl";
-import {TRIPS_VISUALIZATON} from "../../constants/graphql";
+import { TRIPS_VISUALIZATON } from "../../constants/graphql";
 
 export default {
   data() {
     return {
       animationTime: new Date(Date.now()).getSeconds() % 120,
       viewState: {
-        latitude: 37.7664413,
-        longitude: -122.39079879999997,
-        zoom: 14,
+        latitude: 53.571361,
+        longitude: 9.952743,
+        zoom: 12,
         pitch: 0,
         bearing: 0
       },
@@ -58,10 +66,11 @@ export default {
           .catch(err => {
             console.log(err);
           });
-      },
+      }
     };
   },
   created() {
+    this.getWaypoints();
     this.map = null;
     this.accessToken =
       "pk.eyJ1Ijoibm9jaGZlbGl4IiwiYSI6IldwOGpBcmcifQ.hrc_eJ8JcJ2W6ABTTaBQOw";
@@ -98,7 +107,7 @@ export default {
         });
       }
     });
-    setInterval(this.getNow, 20);
+    setInterval(this.getNow, 40);
     this.renderLayers([this.getLayer]);
   },
   methods: {
@@ -109,26 +118,35 @@ export default {
       });
     },
     getNow: function() {
-      this.animationTime = (new Date(Date.now()) % 1199);
-      console.log(this.animationTime);
+      this.animationTime = new Date(Date.now()) % 47800;
+    },
+    convertHex: function(color) {
+      color = color.replace("#", "");
+      let r = parseInt(color.substring(0, 2), 16);
+      let g = parseInt(color.substring(2, 4), 16);
+      let b = parseInt(color.substring(4, 6), 16);
+      return [r,g,b];
     }
   },
 
   computed: {
     getLayer() {
-      return new TripsLayer({
-        id: "trips-layer",
-        data: this.waypoints,
-        getPath: d => d.waypoints.map(p => p.coordinates),
-        // deduct start timestamp from each data point to avoid overflow
-        getTimestamps: d => d.waypoints.map(p => p.timestamp - 1554772579000),
-        getColor: [253, 128, 93],
-        opacity: 0.8,
-        widthMinPixels: 2,
-        rounded: true,
-        trailLength: 200,
-        currentTime: this.animationTime
-      });
+      var wp = this.waypoints;
+      if (wp && wp.length > 0) {
+        return new TripsLayer({
+          id: "trips-layer",
+          data: wp,
+          getPath: d => d.path.map(p => p.l),
+          // deduct start timestamp from each data point to avoid overflow
+          getTimestamps: d => d.path.map(p => p.t),
+          getColor:  d  => this.convertHex(d.color),
+          opacity: 0.8,
+          widthMinPixels: 4,
+          rounded: true,
+          trailLength: 200,
+          currentTime: this.animationTime
+        });
+      }
     }
   },
 
